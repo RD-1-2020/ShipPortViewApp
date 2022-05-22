@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Digit Порт</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Digit Порт</string>
+    <string name="nav_header_subtitle">Приложение для обработки заказов</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Заказы</string>
+    <string name="menu_gallery">Клиенты</string>
+    <string name="menu_slideshow">Заказы готовые к отгрузке</string>
+</resources>

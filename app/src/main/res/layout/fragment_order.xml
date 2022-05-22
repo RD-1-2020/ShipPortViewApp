@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.nstu.spdb.ui.home.OrderFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <!-- android:numColumns=2 is the number of columns for Grid View
+             android:horizontalSpacing is the space between horizontal
+             grid items.-->
+        <ListView
+            android:id="@+id/orderGrid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:horizontalSpacing="6dp"
+            android:numColumns="2"
+            android:verticalSpacing="6dp"
+            android:layout_marginBottom="150dp"/>
+
+        <Button
+            android:id="@+id/createOrderButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/transparent_bg_bordered_button"
+            android:text="Новый Заказ"
+            android:textColor="@color/purple_700"
+            android:horizontalSpacing="6dp"
+            android:layout_marginTop="650dp"
+            android:layout_marginBottom="40dp"
+            android:layout_marginHorizontal="30dp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

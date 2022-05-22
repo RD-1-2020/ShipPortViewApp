@@ -1,0 +1,116 @@
+package com.nstu.spdb;
+
+import android.os.Bundle;
+import android.view.Menu;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
+import com.google.android.material.navigation.NavigationView;
+import com.nstu.spdb.databinding.ActivityMainBinding;
+import com.nstu.spdb.dto.OrderDto;
+import com.nstu.spdb.notify.NotifySender;
+import com.nstu.spdb.service.ModalWindowService;
+import com.nstu.spdb.service.ServerRequestService;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class ShipPortDatabaseAndroidApplication extends AppCompatActivity {
+    private final static String LOG_TAG = ShipPortDatabaseAndroidApplication.class.getName();
+
+    private static final int NOTIFY_SENDER_COUNT = 1;
+    private static final ExecutorService notifyExecutor = Executors.newFixedThreadPool(NOTIFY_SENDER_COUNT);
+
+    private AppBarConfiguration mAppBarConfiguration;
+    private ActivityMainBinding binding;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        ModalWindowService.createSupportActionBarWithInput(this, binding);
+        prepareNavigationBar();
+
+        startThreadPools();
+
+        ListView listView = findViewById(R.id.orderGrid);
+
+        final List<String> orderList = new ArrayList<>();
+
+        List<OrderDto> orders = ServerRequestService.getInstance().getAllOrders();
+        if (orders != null) {
+            orders.forEach(order -> {
+                orderList.add(order.getOrderId().toString());
+            });
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                    android.R.layout.simple_list_item_1, orderList);
+
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener((parent, itemClicked, position, id) -> {
+                Toast.makeText(getApplicationContext(),
+                        ((TextView) itemClicked).getText(),
+                        Toast.LENGTH_SHORT).show();
+            });
+        }
+    }
+
+
+    private void startThreadPools() {
+        for (int i = 0; i < NOTIFY_SENDER_COUNT; i++) {
+            NotifySender sender = new NotifySender();
+            sender.setWork(true);
+            notifyExecutor.execute(sender);
+        }
+    }
+
+    private void prepareNavigationBar() {
+        DrawerLayout drawer = binding.drawerLayout;
+        NavigationView navigationView = binding.navView;
+
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                .setOpenableLayout(drawer)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
+    }
+
+    private void stopThreadPools() {
+        notifyExecutor.shutdown();
+    }
+
+    @Override
+    public void finish() {
+        stopThreadPools();
+        super.finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+                || super.onSupportNavigateUp();
+    }
+}
