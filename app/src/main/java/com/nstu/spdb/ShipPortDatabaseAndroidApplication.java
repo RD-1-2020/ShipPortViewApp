@@ -15,6 +15,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.nstu.spdb.cache.CargoCache;
 import com.nstu.spdb.cache.ClientCache;
 import com.nstu.spdb.cache.OrderCache;
 import com.nstu.spdb.databinding.ActivityMainBinding;
@@ -40,6 +41,7 @@ public class ShipPortDatabaseAndroidApplication extends AppCompatActivity {
 
     private final OrderCache orderCache = OrderCache.getInstance();
     private final ClientCache clientCache = ClientCache.getInstance();
+    private final CargoCache cargoCache = CargoCache.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class ShipPortDatabaseAndroidApplication extends AppCompatActivity {
     private void refreshAllCachesWithWait() {
         orderCache.refreshCache();
         clientCache.refreshCache();
+        cargoCache.refreshCache();
         LockSupport.parkNanos(TimeUnit.MILLISECONDS.toNanos(2_000L));
     }
 

@@ -18,6 +18,8 @@ import com.nstu.spdb.cache.OrderCache;
 import com.nstu.spdb.databinding.FragmentOrderBinding;
 import com.nstu.spdb.dto.OrderDto;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +39,7 @@ public class OrderFragment extends Fragment {
         List<OrderDto> orders = orderCache.getCache();
         if (orders != null) {
             orders.forEach(order -> {
-                orderList.add(order.getOrderId().toString());
+                orderList.add(order.getOrderId().toString() + StringUtils.SPACE + order.getStatusTitle());
             });
 
             Context context = root.getContext();

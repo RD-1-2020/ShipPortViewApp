@@ -29,7 +29,6 @@ public class ModalWindowService {
     public static <Activity extends AppCompatActivity> void createSupportActionBarWithInput(Activity activity, ActivityMainBinding binding) {
         activity.setSupportActionBar(binding.appBarMain.toolbar);
         binding.appBarMain.fab.setOnClickListener(view -> createSupportInputModalOnClickListener(activity));
-        binding.appBarMain.fab.setBackgroundColor(0x00ffffff);
     }
 
     public static <Activity extends AppCompatActivity> void createSupportInputModalOnClickListener(Activity activity) {
@@ -76,6 +75,33 @@ public class ModalWindowService {
     public static void createCreateClientDialog(Context context, ArrayAdapter<String> gridAdapter) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Создание нового клиента");
+
+        RelativeLayout layout = new RelativeLayout(context);
+        layout.setPadding(30, 6, 30, 6);
+
+        final EditText input = new EditText(context);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        input.setLayoutParams(layoutParams);
+        input.setHint("ФИО");
+        layout.addView(input);
+
+        builder.setView(layout);
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            ClientDto clientDto = new ClientDto();
+            clientDto.setFullName(input.getText().toString());
+
+            ClientService.getInstance().createClientWithRefreshCacheAndAdapter(clientDto, gridAdapter);
+        });
+
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+        builder.show();
+    }
+
+    public static void createUpdateCargoDialog(Context context, ArrayAdapter<String> gridAdapter) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Добавление накладной");
 
         RelativeLayout layout = new RelativeLayout(context);
         layout.setPadding(30, 6, 30, 6);
