@@ -11,6 +11,7 @@ public class OrderDto implements Serializable {
     private Date createDate;
     private Date closeDate;
     private List<CargoDto> cargos;
+    //TODO STATUS
 
     public Long getOrderId() {
         return orderId;

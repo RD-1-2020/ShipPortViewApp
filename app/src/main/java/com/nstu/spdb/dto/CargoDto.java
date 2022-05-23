@@ -8,6 +8,7 @@ public class CargoDto implements Serializable {
     private Long weight;
     private String title;
     private InvoiceDto invoice;
+    //TODO STATUS
 
     public Long getId() {
         return id;

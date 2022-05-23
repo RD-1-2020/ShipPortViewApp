@@ -31,8 +31,8 @@ public class ClientCache {
         new Thread() {
             @Override
             public void run() {
-                super.run();
                 synchronized (cache) {
+                    super.run();
                     cache.clear();
                     List<ClientDto> ordersDto = clientRequestService.getAllClients();
                     if (ordersDto == null) {
@@ -49,6 +49,7 @@ public class ClientCache {
 
     public List<ClientDto> getCache() {
         if (cache.isEmpty()) {
+            refreshCache();
             LockSupport.parkNanos(TimeUnit.MILLISECONDS.toNanos(2_000L));
         }
 
