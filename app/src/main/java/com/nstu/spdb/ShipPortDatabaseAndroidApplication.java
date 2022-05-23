@@ -15,16 +15,19 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.nstu.spdb.cache.ClientCache;
+import com.nstu.spdb.cache.OrderCache;
 import com.nstu.spdb.databinding.ActivityMainBinding;
 import com.nstu.spdb.dto.OrderDto;
 import com.nstu.spdb.notify.NotifySender;
 import com.nstu.spdb.service.ModalWindowService;
-import com.nstu.spdb.service.OrderRequestService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.LockSupport;
 
 public class ShipPortDatabaseAndroidApplication extends AppCompatActivity {
     private final static String LOG_TAG = ShipPortDatabaseAndroidApplication.class.getName();
@@ -35,7 +38,8 @@ public class ShipPortDatabaseAndroidApplication extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
 
-    private final OrderRequestService orderRequestService = OrderRequestService.getInstance();
+    private final OrderCache orderCache = OrderCache.getInstance();
+    private final ClientCache clientCache = ClientCache.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +52,13 @@ public class ShipPortDatabaseAndroidApplication extends AppCompatActivity {
         prepareNavigationBar();
 
         startThreadPools();
+        refreshAllCachesWithWait();
 
         ListView listView = findViewById(R.id.orderGrid);
 
         final List<String> orderList = new ArrayList<>();
 
-        List<OrderDto> orders = orderRequestService.getAllOrders();
+        List<OrderDto> orders = orderCache.getCache();
         if (orders != null) {
             orders.forEach(order -> {
                 orderList.add(order.getOrderId().toString());
@@ -69,6 +74,12 @@ public class ShipPortDatabaseAndroidApplication extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             });
         }
+    }
+
+    private void refreshAllCachesWithWait() {
+        orderCache.refreshCache();
+        clientCache.refreshCache();
+        LockSupport.parkNanos(TimeUnit.MILLISECONDS.toNanos(2_000L));
     }
 
 

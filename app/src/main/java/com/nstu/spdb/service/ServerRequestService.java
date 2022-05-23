@@ -26,7 +26,7 @@ public class ServerRequestService {
         return INSTANCE;
     }
 
-    public String doGetRequest(String url) {
+    public String doSyncGetRequest(String url) {
         Request request = new Request.Builder()
                 .url(url)
                 .build();

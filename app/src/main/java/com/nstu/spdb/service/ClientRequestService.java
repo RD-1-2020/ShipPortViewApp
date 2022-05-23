@@ -8,7 +8,7 @@ import java.util.List;
 public class ClientRequestService {
     private static ClientRequestService INSTANCE;
 
-    private static final String GET_ALL_CLIENT_URL = ServerRequestService.HOST_URL + "order/getOrders";
+    private static final String GET_ALL_CLIENT_URL = ServerRequestService.HOST_URL + "client/getClients";
     private final ServerRequestService serverRequestService = ServerRequestService.getInstance();
     private final JsonUtils jsonUtils = JsonUtils.getInstance();
 
@@ -25,6 +25,6 @@ public class ClientRequestService {
     }
 
     public List<ClientDto> getAllClients() {
-        return jsonUtils.jsonToListWithGeneric(serverRequestService.doGetRequest(GET_ALL_CLIENT_URL), ClientDto.class);
+        return jsonUtils.jsonToListWithGeneric(serverRequestService.doSyncGetRequest(GET_ALL_CLIENT_URL), ClientDto.class);
     }
 }

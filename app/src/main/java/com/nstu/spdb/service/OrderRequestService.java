@@ -14,11 +14,11 @@ public class OrderRequestService {
     private final ServerRequestService serverRequestService = ServerRequestService.getInstance();
 
     public List<OrderDto> getAllOrders() {
-        return jsonUtils.jsonToListWithGeneric(serverRequestService.doGetRequest(GET_ALL_ORDER_URL), OrderDto.class);
+        return jsonUtils.jsonToListWithGeneric(serverRequestService.doSyncGetRequest(GET_ALL_ORDER_URL), OrderDto.class);
     }
 
     public OrderDto getOrder(String orderId) {
-        return jsonUtils.fromJson(serverRequestService.doGetRequest(GET_ORDER_URL + orderId), OrderDto.class);
+        return jsonUtils.fromJson(serverRequestService.doSyncGetRequest(GET_ORDER_URL + orderId), OrderDto.class);
     }
 
     private OrderRequestService() {
