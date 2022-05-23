@@ -1,8 +1,11 @@
 package com.nstu.spdb.utils;
 
+import android.util.Log;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nstu.spdb.service.ServerRequestService;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,6 +13,7 @@ import java.util.Map;
 import java.util.TimeZone;
 
 public class JsonUtils {
+    private final static String LOG_TAG = ServerRequestService.class.getName();
 
     private static final ObjectMapper objectMapper = new ObjectMapper().setTimeZone(TimeZone.getDefault());
 
@@ -35,6 +39,7 @@ public class JsonUtils {
         try {
             result = objectMapper.readValue(json, clazz);
         } catch (IOException e) {
+            Log.e(LOG_TAG, "In mapping process something went wrong!", e);
         }
         return result;
     }
@@ -45,6 +50,7 @@ public class JsonUtils {
             result = objectMapper.readValue(json,
                     constructParametricType(List.class, clazz));
         } catch (IOException e) {
+            Log.e(LOG_TAG, "In mapping process something went wrong!", e);
         }
         return result;
 
@@ -60,6 +66,7 @@ public class JsonUtils {
             result = objectMapper.readValue(json,
                     constructParametricType(mapClass, keyClass, valueClass));
         } catch (IOException e) {
+            Log.e(LOG_TAG, "In mapping process something went wrong!", e);
         }
         return result;
     }
@@ -72,6 +79,7 @@ public class JsonUtils {
         try {
             return objectMapper.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
+            Log.e(LOG_TAG, "In mapping process something went wrong!", e);
         }
         return null;
     }

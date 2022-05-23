@@ -6,6 +6,9 @@ public class ClientDto implements Serializable {
     private Long id;
     private String fullName;
 
+    public ClientDto() {
+    }
+
     public Long getId() {
         return id;
     }

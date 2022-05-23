@@ -29,6 +29,7 @@ public class ModalWindowService {
     public static <Activity extends AppCompatActivity> void createSupportActionBarWithInput(Activity activity, ActivityMainBinding binding) {
         activity.setSupportActionBar(binding.appBarMain.toolbar);
         binding.appBarMain.fab.setOnClickListener(view -> createSupportInputModalOnClickListener(activity));
+        binding.appBarMain.fab.setBackgroundColor(0x00ffffff);
     }
 
     public static <Activity extends AppCompatActivity> void createSupportInputModalOnClickListener(Activity activity) {

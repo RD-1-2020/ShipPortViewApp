@@ -11,7 +11,15 @@ public class OrderDto implements Serializable {
     private Date createDate;
     private Date closeDate;
     private List<CargoDto> cargos;
-    //TODO STATUS
+    private String statusTitle;
+
+    public String getStatusTitle() {
+        return statusTitle;
+    }
+
+    public void setStatusTitle(String statusTitle) {
+        this.statusTitle = statusTitle;
+    }
 
     public Long getOrderId() {
         return orderId;

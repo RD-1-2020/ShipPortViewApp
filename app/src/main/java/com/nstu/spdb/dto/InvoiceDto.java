@@ -1,7 +1,5 @@
 package com.nstu.spdb.dto;
 
-import com.nstu.spdb.enums.InvoiceType;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,7 +7,6 @@ public class InvoiceDto implements Serializable {
     private Long id;
     private String title;
     private String number;
-    private InvoiceType type;
     private Date dateSupply;
 
     public String getNumber() {
@@ -26,14 +23,6 @@ public class InvoiceDto implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public InvoiceType getType() {
-        return type;
-    }
-
-    public void setType(InvoiceType type) {
-        this.type = type;
     }
 
     public Date getDateSupply() {

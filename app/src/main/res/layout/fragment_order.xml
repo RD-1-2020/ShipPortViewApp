@@ -14,8 +14,8 @@
         android:text="Новый Заказ"
         android:textColor="@color/purple_700"
         android:horizontalSpacing="6dp"
-        android:layout_marginTop="650dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginTop="560dp"
+        android:layout_marginBottom="100dp"
         android:layout_marginHorizontal="30dp" />
 
     <ListView

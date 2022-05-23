@@ -9,5 +9,5 @@
 
     <string name="menu_home">Заказы</string>
     <string name="menu_gallery">Клиенты</string>
-    <string name="menu_slideshow">Заказы готовые к отгрузке</string>
+    <string name="menu_slideshow">Принять грузы</string>
 </resources>
