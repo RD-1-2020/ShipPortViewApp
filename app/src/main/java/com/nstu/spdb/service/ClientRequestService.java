@@ -9,6 +9,8 @@ public class ClientRequestService {
     private static ClientRequestService INSTANCE;
 
     private static final String GET_ALL_CLIENT_URL = ServerRequestService.HOST_URL + "client/getClients";
+    private static final String CREATE_CLIENT_URL = ServerRequestService.HOST_URL + "client/create";
+
     private final ServerRequestService serverRequestService = ServerRequestService.getInstance();
     private final JsonUtils jsonUtils = JsonUtils.getInstance();
 
@@ -26,5 +28,14 @@ public class ClientRequestService {
 
     public List<ClientDto> getAllClients() {
         return jsonUtils.jsonToListWithGeneric(serverRequestService.doSyncGetRequest(GET_ALL_CLIENT_URL), ClientDto.class);
+    }
+
+    public void createClient(ClientDto clientDto) {
+        String json = jsonUtils.toJson(clientDto);
+        if (json == null) {
+            return;
+        }
+
+        serverRequestService.doAsyncPostRequestWithNoReturn(CREATE_CLIENT_URL, json);
     }
 }

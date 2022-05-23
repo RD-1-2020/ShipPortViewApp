@@ -54,6 +54,7 @@ public class ShipPortDatabaseAndroidApplication extends AppCompatActivity {
         startThreadPools();
         refreshAllCachesWithWait();
 
+        //TODO REMOVE ME
         ListView listView = findViewById(R.id.orderGrid);
 
         final List<String> orderList = new ArrayList<>();
@@ -76,6 +77,7 @@ public class ShipPortDatabaseAndroidApplication extends AppCompatActivity {
         }
     }
 
+    // TODO: schedule
     private void refreshAllCachesWithWait() {
         orderCache.refreshCache();
         clientCache.refreshCache();

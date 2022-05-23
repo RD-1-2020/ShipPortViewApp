@@ -68,7 +68,7 @@ public class JsonUtils {
         return objectMapper.getTypeFactory().constructParametricType(parametrized, parameterClasses);
     }
 
-    public static String toJson(Object obj) {
+    public String toJson(Object obj) {
         try {
             return objectMapper.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
