@@ -1,10 +1,6 @@
 package com.nstu.spdb.service;
 
-import com.nstu.spdb.dto.OrderDto;
-import com.nstu.spdb.utils.JsonUtils;
-
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import okhttp3.Call;
@@ -14,7 +10,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class ServerRequestService {
-    private static final String HOST_URL = "http://192.168.0.5:8080/";
+    public static final String HOST_URL = "http://90.189.147.81:8182/";
     private static final String GET_ALL_ORDER_URL = HOST_URL + "order/getOrders";
     private static ServerRequestService INSTANCE;
 
@@ -30,14 +26,11 @@ public class ServerRequestService {
         return INSTANCE;
     }
 
-    public List<OrderDto> getAllOrders() {
-        return JsonUtils.jsonToListWithGeneric(doGetRequest(GET_ALL_ORDER_URL), OrderDto.class);
-    }
-
-    private String doGetRequest(String url) {
+    public String doGetRequest(String url) {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
+
         final String[] res = {""};
         CountDownLatch countDownLatch = new CountDownLatch(1);
         OkHttpClient client = new OkHttpClient();

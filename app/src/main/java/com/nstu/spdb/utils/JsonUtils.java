@@ -13,7 +13,21 @@ public class JsonUtils {
 
     private static final ObjectMapper objectMapper = new ObjectMapper().setTimeZone(TimeZone.getDefault());
 
-    public static <T> T fromJson(String json, Class<T> clazz) {
+    private static JsonUtils INSTANCE;
+
+    private JsonUtils() {
+
+    }
+
+    public static JsonUtils getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new JsonUtils();
+        }
+
+        return INSTANCE;
+    }
+
+    public <T> T fromJson(String json, Class<T> clazz) {
         T result = null;
         if (clazz == null || json == null) {
             return null;
@@ -25,7 +39,7 @@ public class JsonUtils {
         return result;
     }
 
-    public static <T> List<T> jsonToListWithGeneric(String json, Class<T> clazz) {
+    public <T> List<T> jsonToListWithGeneric(String json, Class<T> clazz) {
         List<T> result = null;
         try {
             result = objectMapper.readValue(json,
@@ -36,11 +50,11 @@ public class JsonUtils {
 
     }
 
-    public static <K, V> Map<K, V> jsonToMapWithGeneric(String json, Class<K> keyClass, Class<V> valueClass) {
+    public <K, V> Map<K, V> jsonToMapWithGeneric(String json, Class<K> keyClass, Class<V> valueClass) {
         return jsonToMapWithGeneric(json, Map.class, keyClass, valueClass);
     }
 
-    private static <T, K, V> Map<K, V> jsonToMapWithGeneric(String json, Class<T> mapClass, Class<K> keyClass, Class<V> valueClass) {
+    private <T, K, V> Map<K, V> jsonToMapWithGeneric(String json, Class<T> mapClass, Class<K> keyClass, Class<V> valueClass) {
         Map<K, V> result = null;
         try {
             result = objectMapper.readValue(json,
@@ -50,7 +64,7 @@ public class JsonUtils {
         return result;
     }
 
-    private static JavaType constructParametricType(Class<?> parametrized, Class<?>... parameterClasses) {
+    private JavaType constructParametricType(Class<?> parametrized, Class<?>... parameterClasses) {
         return objectMapper.getTypeFactory().constructParametricType(parametrized, parameterClasses);
     }
 
@@ -62,7 +76,7 @@ public class JsonUtils {
         return null;
     }
 
-    public static String toString(Object rawData) throws JsonProcessingException {
+    public String toString(Object rawData) throws JsonProcessingException {
         return objectMapper.writeValueAsString(rawData);
     }
 }

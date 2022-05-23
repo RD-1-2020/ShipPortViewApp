@@ -3,7 +3,7 @@ package com.nstu.spdb.notify;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-public class NotifyQueue<T> {
+public class NotifyQueue {
     private static NotifyQueue INSTANCE;
 
     private final static LinkedBlockingQueue<Sendable> notifyQueue = new LinkedBlockingQueue<>();
@@ -24,6 +24,6 @@ public class NotifyQueue<T> {
     }
 
     public Sendable next() throws InterruptedException {
-        return notifyQueue.poll(10000L, TimeUnit.MILLISECONDS);
+        return notifyQueue.poll(10_000L, TimeUnit.MILLISECONDS);
     }
 }

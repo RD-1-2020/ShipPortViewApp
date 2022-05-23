@@ -19,7 +19,7 @@ import com.nstu.spdb.databinding.ActivityMainBinding;
 import com.nstu.spdb.dto.OrderDto;
 import com.nstu.spdb.notify.NotifySender;
 import com.nstu.spdb.service.ModalWindowService;
-import com.nstu.spdb.service.ServerRequestService;
+import com.nstu.spdb.service.OrderRequestService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +34,8 @@ public class ShipPortDatabaseAndroidApplication extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+
+    private final OrderRequestService orderRequestService = OrderRequestService.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,7 @@ public class ShipPortDatabaseAndroidApplication extends AppCompatActivity {
 
         final List<String> orderList = new ArrayList<>();
 
-        List<OrderDto> orders = ServerRequestService.getInstance().getAllOrders();
+        List<OrderDto> orders = orderRequestService.getAllOrders();
         if (orders != null) {
             orders.forEach(order -> {
                 orderList.add(order.getOrderId().toString());

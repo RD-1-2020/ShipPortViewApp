@@ -11,9 +11,6 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-        <!-- android:numColumns=2 is the number of columns for Grid View
-             android:horizontalSpacing is the space between horizontal
-             grid items.-->
         <ListView
             android:id="@+id/orderGrid"
             android:layout_width="match_parent"
