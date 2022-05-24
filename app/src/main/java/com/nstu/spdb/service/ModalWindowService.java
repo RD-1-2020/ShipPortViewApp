@@ -2,12 +2,14 @@ package com.nstu.spdb.service;
 
 import android.content.Context;
 import android.text.InputType;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -18,6 +20,9 @@ import com.nstu.spdb.dto.CargoDto;
 import com.nstu.spdb.dto.ClientDto;
 import com.nstu.spdb.dto.InvoiceDto;
 import com.nstu.spdb.dto.OrderDto;
+import com.nstu.spdb.notify.NotifyFactory;
+import com.nstu.spdb.notify.NotifyQueue;
+import com.nstu.spdb.telegram.TelegramMessage;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -31,6 +36,8 @@ public class ModalWindowService {
 
     public static final String SUPPORT_HINT = "описание";
     public static final String CONTACT_HINT = "ваш номер телефона или telegramId";
+
+    private static final NotifyQueue notifyQueue = NotifyQueue.getInstance();
 
     public static <Activity extends AppCompatActivity> void createSupportActionBarWithInput(Activity activity, ActivityMainBinding binding) {
         activity.setSupportActionBar(binding.appBarMain.toolbar);
@@ -61,9 +68,15 @@ public class ModalWindowService {
         builder.setView(layout);
 
         builder.setPositiveButton("OK", (dialog, which) -> {
-            Toast.makeText(activity,
-                    "Данный функционал находиться в разработке!",
-                    Toast.LENGTH_SHORT).show();
+            String messageText = input.getText().toString() +
+                    "\n" + "Номер клиента: " + inputPhone.getText().toString();
+
+            try {
+                TelegramMessage notifyMessage = NotifyFactory.createTelegramMessage(messageText);
+                notifyQueue.push(notifyMessage);
+            } catch (InterruptedException exception) {
+                Log.e(LOG_TAG, "In process add message to send order something went wrong!", exception);
+            }
         });
 
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
