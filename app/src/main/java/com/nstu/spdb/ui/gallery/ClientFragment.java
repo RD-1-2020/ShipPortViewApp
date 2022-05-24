@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.nstu.spdb.R;
 import com.nstu.spdb.cache.ClientCache;
-import com.nstu.spdb.databinding.FragmentGalleryBinding;
+import com.nstu.spdb.databinding.FragmentClientBinding;
 import com.nstu.spdb.dto.ClientDto;
 import com.nstu.spdb.service.ModalWindowService;
 
@@ -21,15 +21,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GalleryFragment extends Fragment {
+public class ClientFragment extends Fragment {
 
-    private FragmentGalleryBinding binding;
+    private FragmentClientBinding binding;
 
     private final ClientCache clientCache = ClientCache.getInstance();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentGalleryBinding.inflate(inflater, container, false);
+        binding = FragmentClientBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         ListView clientListView = root.findViewById(R.id.clientGrid);

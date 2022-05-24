@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.nstu.spdb.cache.CargoCache;
-import com.nstu.spdb.databinding.FragmentSlideshowBinding;
+import com.nstu.spdb.databinding.FragmentCargoBinding;
 import com.nstu.spdb.dto.CargoDto;
 import com.nstu.spdb.service.ModalWindowService;
 
@@ -24,13 +24,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SlideshowFragment extends Fragment {
+public class CargoFragment extends Fragment {
     private final CargoCache cargoCache = CargoCache.getInstance();
-    private FragmentSlideshowBinding binding;
+    private FragmentCargoBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentCargoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         ListView listView = binding.cargoGrid;
 
