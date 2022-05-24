@@ -71,7 +71,6 @@ public class ModalWindowService {
             String messageText = input.getText().toString() +
                     "\n" + "Номер клиента: " + inputPhone.getText().toString();
 
-            // TODO: ради интереса попробовать сложить информацию об устройстве
             try {
                 TelegramMessage notifyMessage = NotifyFactory.createTelegramMessage(messageText);
                 notifyQueue.push(notifyMessage);
@@ -180,7 +179,7 @@ public class ModalWindowService {
             final EditText cargoTitleInput = new EditText(context);
             FrameLayout.LayoutParams layoutParamsTitleParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             cargoTitleInput.setLayoutParams(layoutParamsTitleParams);
-            cargoTitleInput.setHint("Введите ФИО клиента");
+            cargoTitleInput.setHint("Введите наименование груза");
             relativeLayout.addView(cargoTitleInput);
 
             final EditText cargoWeightInput = new EditText(context);
