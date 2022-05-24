@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.nstu.spdb.cache.CargoCache;
 import com.nstu.spdb.databinding.FragmentSlideshowBinding;
 import com.nstu.spdb.dto.CargoDto;
+import com.nstu.spdb.service.ModalWindowService;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -38,7 +39,9 @@ public class SlideshowFragment extends Fragment {
         List<CargoDto> cargoDtos = cargoCache.getCache();
         if (cargoDtos != null) {
             cargoDtos.forEach(cargoDto -> {
-                cargoList.add(cargoDto.getTitle() + StringUtils.SPACE + cargoDto.getWeight() + "кг");
+                cargoList.add(cargoDto.getId() +
+                        StringUtils.SPACE + cargoDto.getTitle() +
+                        StringUtils.SPACE + cargoDto.getWeight() + "кг");
             });
 
             Context context = root.getContext();
@@ -47,9 +50,7 @@ public class SlideshowFragment extends Fragment {
 
             listView.setAdapter(adapter);
             listView.setOnItemClickListener((parent, itemClicked, position, id) -> {
-                Toast.makeText(context,
-                        ((TextView) itemClicked).getText(),
-                        Toast.LENGTH_SHORT).show();
+                ModalWindowService.createUpdateCargoDialog(context, ((TextView) itemClicked).getText().toString());
             });
         }
         return root;
@@ -58,6 +59,7 @@ public class SlideshowFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        cargoCache.refreshCache();
         binding = null;
     }
 }

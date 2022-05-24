@@ -49,6 +49,7 @@ public class OrderCache {
 
     public List<OrderDto> getCache() {
         if (cache.isEmpty()) {
+            refreshCache();
             LockSupport.parkNanos(TimeUnit.MILLISECONDS.toNanos(2_000L));
         }
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +18,8 @@ import com.nstu.spdb.R;
 import com.nstu.spdb.cache.OrderCache;
 import com.nstu.spdb.databinding.FragmentOrderBinding;
 import com.nstu.spdb.dto.OrderDto;
+import com.nstu.spdb.service.ModalWindowService;
+import com.nstu.spdb.service.OrderService;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -37,22 +40,20 @@ public class OrderFragment extends Fragment {
         final List<String> orderList = new ArrayList<>();
 
         List<OrderDto> orders = orderCache.getCache();
-        if (orders != null) {
-            orders.forEach(order -> {
-                orderList.add(order.getOrderId().toString() + StringUtils.SPACE + order.getStatusTitle());
-            });
+        orders.forEach(order -> {
+            orderList.add(order.getOrderId() + StringUtils.SPACE + order.getStatusTitle());
+        });
 
-            Context context = root.getContext();
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(context,
-                    android.R.layout.simple_list_item_1, orderList);
+        Context context = root.getContext();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context,
+                android.R.layout.simple_list_item_1, orderList);
 
-            listView.setAdapter(adapter);
-            listView.setOnItemClickListener((parent, itemClicked, position, id) -> {
-                Toast.makeText(context,
-                        ((TextView) itemClicked).getText(),
-                        Toast.LENGTH_SHORT).show();
-            });
-        }
+        listView.setAdapter(adapter);
+
+        Button createOrderButton = binding.createOrderButton;
+        createOrderButton.setOnClickListener((event) -> {
+            ModalWindowService.createCreateOrderDialog(root.getContext(), adapter);
+        });
 
         return root;
     }
@@ -60,6 +61,7 @@ public class OrderFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        orderCache.refreshCache();
         binding = null;
     }
 }
