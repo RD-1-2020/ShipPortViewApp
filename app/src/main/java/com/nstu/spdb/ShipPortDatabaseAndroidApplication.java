@@ -20,6 +20,8 @@ import com.nstu.spdb.databinding.ActivityMainBinding;
 import com.nstu.spdb.dto.OrderDto;
 import com.nstu.spdb.service.ModalWindowService;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -45,7 +47,6 @@ public class ShipPortDatabaseAndroidApplication extends AppCompatActivity {
 
         refreshAllCachesWithWait();
 
-        //TODO REMOVE ME
         ListView listView = findViewById(R.id.orderGrid);
 
         final List<String> orderList = new ArrayList<>();
@@ -53,7 +54,7 @@ public class ShipPortDatabaseAndroidApplication extends AppCompatActivity {
         List<OrderDto> orders = orderCache.getCache();
         if (orders != null) {
             orders.forEach(order -> {
-                orderList.add(order.getOrderId().toString());
+                orderList.add(order.getOrderId() + StringUtils.SPACE + order.getStatusTitle());
             });
 
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
